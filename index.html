@@ -59,16 +59,34 @@
         //配置
         var config = {
             cover: '', //封面图片默认：。./imgs/cover4.jpg,替换cover4.jpg即可
-            iPhone_download_name: "iPhone下载", // iPhone下载名称
-            android_download_name: "Android下载", // Android下载名称
-            iPhone_download_url: "https://www.baidu.com/", // iPhone下载链接
-            android_download_url: "https://youku.com/", // Android下载链接
+            iPhone_download_name: "立即下载", // iPhone下载名称
+            android_download_name: "立即下载", // Android下载名称
+            iPhone_download_url: "https://apps.apple.com/cn/app/%E5%BE%AE%E4%BF%A1/id414478124", // iPhone下载链接
+            android_download_url: "https://wwxb.lanzoul.com/iCT7R0ikpl1g", // Android下载链接
             open_app_url: ""
         }
+        var env = function () {
+            var inBrowser = typeof window !== 'undefined'
+            var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+            return {
+                isAndroid: UA && UA.indexOf('android') > 0,
+                isIOS: UA && /iphone|ipad|ipod|ios/.test(UA),
+                isWechat: UA && UA.indexOf('micromessenger') > -1
+            }
+        }
+
         window.onload = function () {
             var iphone = $('#eIphone');
             var android = $('#eAndroid');
             var cover = $('#eLogo');
+
+            if (env().isAndroid) {
+                iphone.style.display = "none";
+                android.style.display = "flex";
+            } else {
+                iphone.style.display = "flex";
+                android.style.display = "none";
+            }
 
             //设置封面
             cover.style.backgroundImage = 'url(./imgs/logo@2x.png)';
